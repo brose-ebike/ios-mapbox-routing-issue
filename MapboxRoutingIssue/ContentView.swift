@@ -11,8 +11,12 @@ struct ContentView: View {
     @ObservedObject var viewModel: ContentViewModel
     
     var body: some View {
-        if let route = viewModel.route {
-            MapboxMapView(route: route)
+        if let route = viewModel.route,
+           let waypoints = viewModel.waypoints {
+            MapboxMapView(route: route,
+                          waypoints: waypoints,
+                          arrivedWaypoints: viewModel.arrivedWaypoints,
+                          remainingWaypoints: viewModel.remainingWaypoints)
         }
     }
 }

@@ -66,6 +66,6 @@ In this respository the most relevant files are
 - `ContentViewModel.swift` where the map matching and route creation is done
 - `MapboxMapView` where the map and route is being shown
 
-### Why don't you use `Directions.shared.calculateRoutes(matching:)`?
+<s>### Why don't you use `Directions.shared.calculateRoutes(matching:)`?
 
-Using this function instead of `Directions.shared.calculateRoutes(options:)` is leading to a completely wrong behavior in all scenarios. `userIsOnRoute` is always `true` nevertheless the user is clearly off the route. The progress is not updated at all. We think, that it was broken by the release 2.5.0 (see more in the comment in the `ContentViewModel.swift`). Instead we are creating the `RouteResponse` objects based on the `MapMatchingResponse` by ourself and setting the `options` of the response to `.route()`.
+Using this function instead of `Directions.shared.calculateRoutes(options:)` is leading to a completely wrong behavior in all scenarios. `userIsOnRoute` is always `true` nevertheless the user is clearly off the route. The progress is not updated at all. We think, that it was broken by the release 2.5.0 (see more in the comment in the `ContentViewModel.swift`). Instead we are creating the `RouteResponse` objects based on the `MapMatchingResponse` by ourself and setting the `options` of the response to `.route()`.</s> (solved with 2.9.0 beta 3)

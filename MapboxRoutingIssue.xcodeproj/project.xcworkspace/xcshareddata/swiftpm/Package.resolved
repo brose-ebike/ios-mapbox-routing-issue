@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mapbox/mapbox-common-ios.git",
       "state" : {
-        "revision" : "e39540d5e8c8709db5ca53f0fdaeea64e351548c",
-        "version" : "22.1.0"
+        "revision" : "0aaa158afd6256d3c866ad5d00f147c98164d9bd",
+        "version" : "23.1.0-beta.2"
       }
     },
     {
@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mapbox/mapbox-core-maps-ios.git",
       "state" : {
-        "revision" : "2d9dc9f1fddf7e5fc14701b4d151b960c9c8745d",
-        "version" : "10.7.0"
+        "revision" : "9d2356fe49e1af9940fd82d5cb3a641536fb09ac",
+        "version" : "10.9.0-beta.1"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mapbox/mapbox-directions-swift.git",
       "state" : {
-        "revision" : "ad9ae364b2ec706886394e1ac460df7758222d93",
-        "version" : "2.6.0"
+        "revision" : "d1bce29e09a6084675bec652fda7a6fddf6e3784",
+        "version" : "2.8.0-alpha.2"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mapbox/mapbox-maps-ios.git",
       "state" : {
-        "revision" : "e50c17c992a9b1d519b2808e4d66193ca259cd39",
-        "version" : "10.7.0"
+        "revision" : "9a10c0e06181ceee994641ce90571cc281403528",
+        "version" : "10.9.0-beta.2"
       }
     },
     {
@@ -50,8 +50,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mapbox/mapbox-navigation-ios.git",
       "state" : {
-        "revision" : "99bf016aa7afd170d1340e62e583ab2a53243073",
-        "version" : "2.7.1"
+        "revision" : "2bd246a7f569940b3051c25897c652b46f250bcc"
       }
     },
     {
@@ -59,8 +58,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mapbox/mapbox-navigation-native-ios.git",
       "state" : {
-        "revision" : "1520d56638cdb073ac401628eb4ce55036d1a349",
-        "version" : "111.0.1"
+        "revision" : "3c1108b622a7fde29872665423797e59a0532207",
+        "version" : "116.0.0"
       }
     },
     {

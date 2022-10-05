@@ -41,15 +41,8 @@ extension ContentViewModel {
     }
     
     func onRouteLoaded(routeResponse: RouteResponse) {
-        guard case .route(let routeOptions) = routeResponse.options else {
-            return
-        }
-        
-        let navigationService = MapboxNavigationService(routeResponse: routeResponse,
-                                                        routeIndex: 0,
-                                                        routeOptions: routeOptions,
-                                                        credentials: Directions.shared.credentials,
-                                                        simulating: .never)
+        let navigationService = MapboxNavigationService(indexedRouteResponse: .init(routeResponse: routeResponse, routeIndex: 0),
+                                                        credentials: Directions.shared.credentials)
         navigationService.delegate = self
         navigationService.start()
                 
@@ -61,66 +54,14 @@ extension ContentViewModel {
 
 extension ContentViewModel {
     func mapMatching(matchOptions: MatchOptions, callback: @escaping (RouteResponse?) -> Void) {
-        mapMatchingWithMatchResponse(matchOptions: matchOptions) { [weak self] mapMatchingResponse in
-            guard let mapMatchingResponse = mapMatchingResponse else {
-                callback(nil)
-                return
-            }
-            guard let routeResponse = try? self?.routeResponse(from: mapMatchingResponse, matchOptions: matchOptions) else {
-                return
-            }
-            callback(routeResponse)
-        }
-    }
-    
-    func mapMatchingWithMatchResponse(matchOptions: MatchOptions, callback: @escaping (MapMatchingResponse?) -> Void) {
-        Directions.shared.calculateRoutes(options: matchOptions) { _, result in
-            guard case .success(let matchResponse) = result else {
+        Directions.shared.calculateRoutes(matching: matchOptions) { session, result in
+            guard case .success(let routeResponse) = result else {
                 print("Unexpected result: \(result)")
                 callback(nil)
                 return
             }
-            callback(matchResponse)
+            callback(routeResponse)
         }
-    }
-    
-    // We need to create the RouteResponse by ourself because for the
-    // working navigation the option type has to be `.route()` 🙈 🙄
-    // Using the constructor giving in the MapMatchingResponse is
-    // setting the type to `.match()` instead of `.route()`. The change was introduced with
-    // commit 3ae5d61b38482cf581277299ca39d43fe6a8cb81 and version 2.5.0
-    // in the RouteController of Mapbox
-    func routeResponse(from mapMatchingResponse: MapMatchingResponse,
-                       matchOptions: MatchOptions) throws -> RouteResponse {
-        let decoder = JSONDecoder()
-        let encoder = JSONEncoder()
-        
-        decoder.userInfo[.options] = matchOptions
-        decoder.userInfo[.credentials] = Directions.shared.credentials
-        encoder.userInfo[.options] = matchOptions
-        encoder.userInfo[.credentials] = Directions.shared.credentials
-        
-        var routes: [Route]?
-        
-        if let matches = mapMatchingResponse.matches {
-            let matchesData = try encoder.encode(matches)
-            routes = try decoder.decode([Route].self, from: matchesData)
-        }
-        
-        var waypoints: [Waypoint]?
-        
-        if let tracepoints = mapMatchingResponse.tracepoints {
-            let filtered = tracepoints.compactMap { $0 }
-            let tracepointsData = try encoder.encode(filtered)
-            waypoints = try decoder.decode([Waypoint].self, from: tracepointsData)
-        }
-    
-        return RouteResponse(httpResponse: mapMatchingResponse.httpResponse,
-                             identifier: nil,
-                             routes: routes,
-                             waypoints: waypoints,
-                             options: .route(RouteOptions(matchOptions: matchOptions)), // this is the relevant change
-                             credentials: Directions.shared.credentials)
     }
 }
 
